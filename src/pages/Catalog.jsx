@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
 
@@ -29,10 +30,34 @@ const products = [
 ];
 
 function Catalog() {
+    const [cart, setCart] = useState({
+        items: [],
+        total: 0
+    })
 
     const addToCart = (product) => {
-        console.info("Agregando al carrito:", product);
+        setCart((prevCart) => {
+            const updatedItems = [...prevCart.items, product];
+            const updatedTotal = prevCart.total + product.price;
+
+            return {
+                items: updatedItems,
+                total: updatedTotal
+            };
+        })
     };
+
+    useEffect(() => {
+        const oldCart = localStorage.getItem('cart')
+        const oldCartParsed = JSON.parse(oldCart)
+        if(oldCartParsed && oldCartParsed.items.length > 0){
+            setCart(oldCartParsed)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart))
+    }, [cart])
 
     return (
         <div className="container">

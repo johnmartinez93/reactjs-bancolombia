@@ -35,7 +35,7 @@ function Catalog() {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1>Catálogo de Productos</h1>
             <div>
                 {products.map((product) => (

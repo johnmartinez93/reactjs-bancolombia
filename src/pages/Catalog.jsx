@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import ProductCard from "../components/ProductCard";
+import { MinicartContext } from "../hooks/useMinicart";
 
 
 const products = [
@@ -30,44 +31,16 @@ const products = [
 ];
 
 function Catalog() {
-    const [cart, setCart] = useState({
-        items: [],
-        total: 0
-    })
-
-    const addToCart = (product) => {
-        setCart((prevCart) => {
-            const updatedItems = [...prevCart.items, product];
-            const updatedTotal = prevCart.total + product.price;
-
-            return {
-                items: updatedItems,
-                total: updatedTotal
-            };
-        })
-    };
-
-    useEffect(() => {
-        const oldCart = localStorage.getItem('cart')
-        const oldCartParsed = JSON.parse(oldCart)
-        if(oldCartParsed && oldCartParsed.items.length > 0){
-            setCart(oldCartParsed)
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }, [cart])
-
+    const { cart } = useContext(MinicartContext);
     return (
         <div className="container">
             <h1>Catálogo de Productos</h1>
+            <h1>Productos: {cart.items.length}</h1>
             <div>
                 {products.map((product) => (
                     <ProductCard
                         key={product.id}
                         product={product}
-                        addToCart={addToCart}
                     />
                 ))}
             </div>

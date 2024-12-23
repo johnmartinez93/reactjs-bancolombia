@@ -1,13 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Catalog from './pages/Catalog';
+import { MinicartProvider } from './hooks/useMinicart';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Catalog />} />
-      </Routes>
-    </BrowserRouter>
+    <MinicartProvider>
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Catalog />} />
+        </Routes>
+      </BrowserRouter>
+    </MinicartProvider>
   );
 }
 

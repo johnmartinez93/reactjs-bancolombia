@@ -1,6 +1,12 @@
+import { useContext } from "react";
+
+import { MinicartContext } from "../hooks/useMinicart";
+
 import "./ProductCard.css"
 
-function ProductCard({ product, addToCart }) {
+function ProductCard({ product }) {
+    const { addToCart } = useContext(MinicartContext)
+
     return (
         <div className="product-card">
             <h3>{product.name}</h3>
